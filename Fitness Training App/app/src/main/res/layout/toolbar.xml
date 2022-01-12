@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:padding="12dp"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="#4EA3EB">
+    <!-- Padding to increase size of bar, gravity to center -->
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:onClick="showNavMenu"
+        app:srcCompat="@drawable/menu_foreground">
+
+    </ImageView>
+
+    <!--Weight to widen-->
+    <TextView
+        android:id="@+id/appHeader"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="52dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="Generic Fitness App"
+        android:textAlignment="center"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"></TextView>
+
+
+
+</LinearLayout>
