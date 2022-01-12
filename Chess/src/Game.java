@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Game {
 
@@ -10,30 +11,55 @@ public class Game {
         p2 = player2;
     }
 
-    private void playGame() {
+    public void playGame() throws InterruptedException {
         board = new Board();
-    }
 
+        while (!board.gameOver) {
+            p1.board = board;
+            p2.board = board;
+            int[][] move = null;
+            if (board.turn == 0) {
+                System.out.println("Player 1 thinking...");
+                move = p1.findMove();
+                if (move[0] == null) {
+                    System.out.println("White has no valid moves. Black wins!");
+                    board.printBoard();
+                    return;
+                }
+                String piece = board.getSpacePiece(move[0][0], move[0][1]);
+                System.out.println("Player 1 move: " + piece + "(" + move[0][0] + ", " + move[0][1] +
+                        ") -> " + "(" + move[1][0] + ", " + move[1][1] + ")");
+            } else if (board.turn == 1) {
+                System.out.println("Player 2 thinking...");
+                move = p2.findMove();
+                if (move[0] == null) {
+                    System.out.println("Black has no valid moves. White wins!");
+                    board.printBoard();
+                    return;
+                }
+                String piece = board.getSpacePiece(move[0][0], move[0][1]);
+                System.out.println("Player 2 move: " + piece + "(" + move[0][0] + ", " + move[0][1] +
+                        ") -> " + "(" + move[1][0] + ", " + move[1][1] + ")");
+            }
+            board.makeMove(move[0], move[1]);
+            board.printBoard();
+            if (board.pieceCaptured.equals("K") || board.pieceCaptured.equals("k")) {
+                return;
+            }
+//            Thread.sleep(3000);
+        }
+    }
 
     public static void main(String args[]) {
         Board board = new Board();
+        Player randomPlayer = new Player("random");
         board.printBoard();
-        ArrayList<int[]> moves = board.getFullMoveset("white");
-//        for (int i = 0; i < moves.size(); i++) {
-//            System.out.println(moves.get(i)[0] + " " + moves.get(i)[1]);
-//        }
-        for (int i = 0; i < board.whiteMoveset.size(); i++) {
-            int[] pieceSpace = board.whiteIndices.get(i);
-            ArrayList<int[]> pieceMoves = board.whiteMoveset.get(board.whiteIndices.get(i));
-            System.out.print("Move space: ");
-            System.out.print(pieceSpace[0] + " " + pieceSpace[1]);
-            System.out.print(" (Piece: " + board.board[pieceSpace[0]][pieceSpace[1]] + ")");
-            System.out.println("\nPossible moves: ");
-            for (int j = 0; j < pieceMoves.size(); j++) {
-                int[] possibleMove = pieceMoves.get(j);
-                System.out.print("(" + possibleMove[0] + ", " + possibleMove[1] + ") ");
-            }
-            System.out.println();
+
+        Game g1 = new Game(randomPlayer, randomPlayer);
+        try {
+            g1.playGame();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }
