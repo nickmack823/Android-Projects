@@ -1,2 +1,2 @@
 # Android-Projects
-Apps I've created/am working on
+Android apps that I've created/am working on
